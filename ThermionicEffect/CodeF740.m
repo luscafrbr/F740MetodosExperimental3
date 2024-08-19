@@ -1,10 +1,40 @@
+% CÓDIGO PARA ANÁLISE DE DADOS E PLOTS DO EXPERIMENTO DE F 740 DE EFEITO
+% TERMIÔNICO
+
 % U = R*i
+% PASSO 0: CARREGANDO E SALVANDO SEU DADO
+
+% salvando o conjunto de dados dentro de uma célula
+data = {}; % crio uma célula vazia
+
+% obs.: as próximas quatro linhas de código precisam ser usadas para a quant. de dados
+% que for necessária usá-las.
+% corrente = xlsread("C:\Users\lucas\OneDrive\Documents\F740\dados exp terminonica 16 ago.xlsx", 1, 'A5:A16'); % abro os dados que tenho interesse em salvar
+% corrente = corrente*10^-6;
+% tensao = xlsread("C:\Users\lucas\OneDrive\Documents\F740\dados exp terminonica 16 ago.xlsx", 1, 'B5:B16'); % abro os dados que tenho interesse em salvar
 corrente = xlsread("C:\Users\lucas\OneDrive\Documents\F740\f 740.xlsx", 1, 'B30:B40');
+corrente = corrente*10^-6;
 tensao = xlsread("C:\Users\lucas\OneDrive\Documents\F740\f 740.xlsx", 1, 'A30:A40');
 
-% CoefAngular = corrente\tensao; % o operadoer \ performa a regressão de mínimos quadrados para obter o coef. angular
+% nos nossos dados do efeito temiônico, a corrente é em microampère
+data{4} = [corrente tensao]; % salvo os dados em alguma posição da célula criada anteriormente
 
-corrente = corrente*10^-6;
+% apague o que estiver salvo nas variávels corrente e tensao para salvar
+% mais dados:
+clear corrente tensao;
+
+% salvando...
+folder = "G:\Drives compartilhados\F 740 - Grp 3\Efeito Termiônico\Dados"; % diretório da pasta que deseja salvar
+filename = "dadosf740.mat"; % nomedoarquivo.mat
+save(fullfile(folder, filename), 'data');
+
+% PASSO 1: CARREGANDO E FAZENDO A REGRESSÃO LINEAR
+% carregando o arquivo salvo anteriormente:
+load("G:\Drives compartilhados\F 740 - Grp 3\Efeito Termiônico\Dados\dadosf740.mat", '-mat'); 
+
+% CoefAngular = corrente\tensao; % o operador \ performa a regressão de mínimos quadrados para obter o coef. angular
+
+
 
 scatter(tensao, corrente); % plota os pontos circulares do conjunto de dados;
 hold on;
