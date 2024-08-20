@@ -28,18 +28,25 @@ folder = "G:\Drives compartilhados\F 740 - Grp 3\Efeito Termiônico\Dados"; % di
 filename = "dadosf740.mat"; % nomedoarquivo.mat
 save(fullfile(folder, filename), 'data');
 
-% PASSO 1: CARREGANDO E FAZENDO A REGRESSÃO LINEAR
+% PASSO 1: CARREGANDO E PLOTANDO OS PONTOS COLETADOS
 % carregando o arquivo salvo anteriormente:
 load("G:\Drives compartilhados\F 740 - Grp 3\Efeito Termiônico\Dados\dadosf740.mat", '-mat'); 
 
-% CoefAngular = corrente\tensao; % o operador \ performa a regressão de mínimos quadrados para obter o coef. angular
+% acessando valores dentro da célula: data{1,1}(1:12)
+texto = {'Tensão 2,6 V | Corrente 1,456 Ampère', 'Tensão 7,78  V | Corrente 2,755 Ampère', 'Tensão 9,16 V | Corrente 3,02 Ampère', 'Tensão 4,82 V | Corrente 3,006 Ampère'};
+for i = 1:length(data)
+    scatter(data{1,i}(length(data{1,i})+1:2*length(data{1,i})), data{1,i}(1:length(data{1,i}))); % plota os pontos circulares do conjunto de dados;
+    hold on; 
+    
+end 
+legend(texto);
+title('Plot de Pontos Coletados: Corrente (em microampère) x Tensão (em volts)');
+xlabel('Tensão (em volts)');
+ylabel('Corrente (em microampère)');
 
 
-
-scatter(tensao, corrente); % plota os pontos circulares do conjunto de dados;
-hold on;
-
-corrente = corrente*10^-6;
+% PASSO 2: FAZENDO A REGRESSÃO LINEAR % falta codar a partir daqui
+% CoefAngular = corrente\tensao; % o operador \ performa a regressão de mínimos quadrados para obter o coef. angular    
 %%%% i(U) = U*(1/R)
 
 corrente = [ones(length(corrente),1) corrente];
