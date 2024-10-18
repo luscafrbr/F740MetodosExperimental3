@@ -55,3 +55,37 @@ plt.xlabel("Diferença de Carga (C)")
 plt.ylabel("Número de gotas")
 plt.title("Histograma das Subtrações de Cargas")
 plt.show()
+
+# FAZ O PLOT DOS DADOS COM UMA GAUSSIANA, APÓS AS SUBTRAÇÕES NECESSÁRIAS:
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# Assuming difs is your data
+# Compute mean and standard deviation of difs
+mean = np.mean(difs)
+std_dev = np.std(difs)
+
+# Create histogram
+plt.hist(difs, bins=50, density=True, alpha=0.6, color='g', label='Data')
+
+# Generate values for the Gaussian curve
+x = np.linspace(min(difs), max(difs), 1000)
+gaussian_curve = norm.pdf(x, mean, std_dev)
+
+# Plot the Gaussian curve
+plt.plot(x, gaussian_curve, 'r-', label=f'Gaussian Fit (mean={mean:.3e}, std={std_dev:.3e})')
+
+# Add a vertical line at the mean value
+plt.axvline(mean, color='b', linestyle='--')
+
+# Add labels and title
+plt.xlabel('Difference')
+plt.ylabel('N')
+plt.title('Histogram with Gaussian Fit')
+
+# Add a legend
+plt.legend()
+
+# Show the plot
+plt.show()
